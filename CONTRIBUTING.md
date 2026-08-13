@@ -20,8 +20,6 @@ The repo is a monorepo. Application chrome lives in `apps/web`. Almost all produ
 
 If adding a widget, theme, or integration requires changing application logic, the architecture is wrong. Stop and ask before patching `apps/web`.
 
-These package folders land with the monorepo foundation. The rules below are the contract even before every folder exists.
-
 ## Add a widget
 
 A widget is a user-facing section on the canvas (About, Socials, GitHub Stats). It is not an HTTP client.
@@ -77,6 +75,10 @@ Phase 1 adapters: GitHub profiles, Shields.io, GitHub Stats, WakaTime, Blog Post
 - Use [Conventional Commits](https://www.conventionalcommits.org/) with a package scope when it applies: `feat(widgets):`, `feat(themes):`, `feat(integrations):`, `feat(core):`, `feat(web):`, `docs:`.
 - Include tests in the same pull request as the code they cover.
 - Do not mix a new widget with editor-shell changes.
+- CI must pass (lint, typecheck, tests, production build). Pull requests do not deploy.
+- Never commit secrets, `.env` files, or Cloudflare tokens.
+
+Production deploys to Cloudflare Pages only when `main` is updated and CI has passed. Preview deploys from pull requests are not used.
 
 ## Questions
 

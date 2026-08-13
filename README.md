@@ -47,6 +47,25 @@ Do not change `apps/web` to register a widget, theme, or integration. If that se
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for the file layout, tests, and pull request conventions.
 
+## Build and deploy
+
+```text
+pnpm install
+pnpm dev          # Vite app at apps/web
+pnpm test
+pnpm typecheck
+pnpm build
+```
+
+GitHub Actions runs lint, typecheck, tests, and a production build on every pull request and on every push to `main`.
+
+Production is Cloudflare Pages. A deploy runs only after CI passes on `main`. Pull requests do not deploy. Do not connect this repository to Cloudflare’s native Git build — GitHub Actions is the only publisher.
+
+Required GitHub Actions secrets:
+
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_ACCOUNT_ID`
+
 ## License
 
 See [LICENSE](./LICENSE).
