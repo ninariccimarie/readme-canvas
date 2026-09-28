@@ -10,3 +10,12 @@ export {
   type ShieldBadgeParams,
 } from "./shields/url";
 export { integration as shieldsIntegration } from "./shields/index";
+export {
+  resolveGithubReadmeStatsTheme,
+} from "./github-stats/theme";
+export {
+  buildGithubStatsMarkdown,
+  buildGithubStatsUrl,
+  type GithubStatsParams,
+} from "./github-stats/url";
+export { integration as githubStatsIntegration } from "./github-stats/index";
