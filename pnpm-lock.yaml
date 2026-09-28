@@ -156,10 +156,32 @@ importers:
         version: 5.9.3
 
   packages/widgets:
+    dependencies:
+      '@readme-canvas/core':
+        specifier: workspace:*
+        version: link:../core
+      '@readme-canvas/integrations':
+        specifier: workspace:*
+        version: link:../integrations
+      '@readme-canvas/ui':
+        specifier: workspace:*
+        version: link:../ui
+      zod:
+        specifier: 'catalog:'
+        version: 4.6.5
     devDependencies:
+      '@types/react':
+        specifier: ^19.2.0
+        version: 19.2.18
+      react:
+        specifier: ^19.2.0
+        version: 19.2.8
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
+      vite:
+        specifier: ^7.1.3
+        version: 7.3.6(jiti@2.7.0)(lightningcss@1.32.0)
 
 packages:
 

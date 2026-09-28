@@ -13,7 +13,19 @@
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  },
+  "dependencies": {
+    "@readme-canvas/core": "workspace:*",
+    "@readme-canvas/integrations": "workspace:*",
+    "@readme-canvas/ui": "workspace:*",
+    "zod": "catalog:"
+  },
   "devDependencies": {
-    "typescript": "catalog:"
+    "@types/react": "^19.2.0",
+    "react": "^19.2.0",
+    "typescript": "catalog:",
+    "vite": "^7.1.3"
   }
 }
