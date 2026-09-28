@@ -22,3 +22,8 @@ export type {
 } from "./registry/context";
 export type { Integration, IntegrationRegistry } from "./registry/integration";
 export type { WidgetManifest, WidgetRegistry } from "./registry/widget";
+export { moveSection, visibleSections } from "./layout/sections";
+export {
+  composeMarkdown,
+  type ComposeMarkdownInput,
+} from "./markdown/compose";
