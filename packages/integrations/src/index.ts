@@ -19,3 +19,9 @@ export {
   type GithubStatsParams,
 } from "./github-stats/url";
 export { integration as githubStatsIntegration } from "./github-stats/index";
+export {
+  buildWakaTimeMarkdown,
+  buildWakaTimeUrl,
+  type WakaTimeParams,
+} from "./wakatime/url";
+export { integration as wakaTimeIntegration } from "./wakatime/index";
