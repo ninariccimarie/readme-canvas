@@ -1,36 +1,34 @@
 import type { WidgetRenderProps } from "@readme-canvas/core";
-import {
-  buildGithubStatsUrl,
-  resolveGithubReadmeStatsTheme,
-} from "@readme-canvas/integrations";
-import type { GithubStatsConfig } from "./schema";
+import { buildStatsExtendedUrl } from "@readme-canvas/integrations";
+import { STATS_CARD_ALTS, statsParamsFromConfig } from "./card";
+import { normalizeGithubStatsConfig, type GithubStatsConfig } from "./schema";
 
 export function Preview({
   profile,
   theme,
   section,
 }: WidgetRenderProps<GithubStatsConfig>) {
-  const username = section.config.username.trim() || profile?.username || "";
-  const heading = section.config.heading.trim();
+  const config = normalizeGithubStatsConfig(section.config);
+  const params = statsParamsFromConfig(config, profile, theme);
+  const heading = config.heading.trim();
 
-  if (!username) {
-    return (
-      <p style={{ color: theme.tokens.secondary }}>
-        Add a GitHub username to show stats.
-      </p>
-    );
+  if (!params) {
+    const hint =
+      config.card === "pin"
+        ? "Add a GitHub username and repository to pin."
+        : config.card === "gist"
+          ? "Add a gist id to show a gist card."
+          : "Add a GitHub username to show stats.";
+
+    return <p style={{ color: theme.tokens.secondary }}>{hint}</p>;
   }
+
+  const alt = STATS_CARD_ALTS[params.card ?? "stats"];
 
   return (
     <section style={{ color: theme.tokens.text }}>
       {heading ? <h2>{heading}</h2> : null}
-      <img
-        src={buildGithubStatsUrl({
-          username,
-          theme: resolveGithubReadmeStatsTheme(theme),
-        })}
-        alt="GitHub stats"
-      />
+      <img src={buildStatsExtendedUrl(params)} alt={alt} />
     </section>
   );
 }
