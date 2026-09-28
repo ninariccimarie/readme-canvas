@@ -13,7 +13,15 @@
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  },
+  "dependencies": {
+    "zod": "catalog:"
+  },
   "devDependencies": {
+    "@types/react": "^19.2.0",
+    "react": "^19.2.0",
     "typescript": "catalog:"
   }
 }
