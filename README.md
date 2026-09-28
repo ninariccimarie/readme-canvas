@@ -53,6 +53,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for the file layout, tests, and pull re
 pnpm install
 pnpm dev          # Vite app at apps/web
 pnpm test
+pnpm e2e          # Playwright, Chromium. First time: pnpm exec playwright install chromium
 pnpm typecheck
 pnpm build
 ```

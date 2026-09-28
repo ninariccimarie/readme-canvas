@@ -6,7 +6,13 @@ import tseslint from "typescript-eslint";
 
 export default defineConfig(
   {
-    ignores: ["**/dist/**", "**/node_modules/**", ".pnpm-store/**"],
+    ignores: [
+      "**/dist/**",
+      "**/node_modules/**",
+      ".pnpm-store/**",
+      "playwright-report/**",
+      "test-results/**",
+    ],
   },
   eslint.configs.recommended,
   tseslint.configs.recommended,
@@ -20,7 +26,7 @@ export default defineConfig(
     },
   },
   {
-    files: ["apps/web/**/*.{ts,tsx}"],
+    files: ["apps/web/src/**/*.{ts,tsx}"],
     plugins: {
       "react-refresh": reactRefresh,
     },
