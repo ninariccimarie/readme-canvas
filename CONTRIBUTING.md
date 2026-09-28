@@ -75,7 +75,7 @@ Phase 1 adapters: GitHub profiles, Shields.io, GitHub Stats, WakaTime, Blog Post
 - Use [Conventional Commits](https://www.conventionalcommits.org/) with a package scope when it applies: `feat(widgets):`, `feat(themes):`, `feat(integrations):`, `feat(core):`, `feat(web):`, `docs:`.
 - Include tests in the same pull request as the code they cover.
 - Do not mix a new widget with editor-shell changes.
-- CI must pass (lint, typecheck, tests, production build). Pull requests do not deploy.
+- CI must pass (lint, typecheck, unit tests, Playwright e2e, production build). Pull requests do not deploy.
 - Never commit secrets, `.env` files, or Cloudflare tokens.
 
 Production deploys to Cloudflare Pages only when `main` is updated and CI has passed. Preview deploys from pull requests are not used.
