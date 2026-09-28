@@ -8,11 +8,14 @@ describe("discoverWidgets", () => {
     expect(widgets.map((widget) => widget.id)).toEqual([
       "about",
       "banners",
+      "blog-posts",
       "dividers",
       "gifs",
+      "github-stats",
       "skills",
       "socials",
       "tables",
+      "wakatime",
     ]);
     expect(
       widgets.every((widget) => typeof widget.generateMarkdown === "function"),
