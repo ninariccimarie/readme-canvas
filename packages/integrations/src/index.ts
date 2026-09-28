@@ -14,9 +14,16 @@ export {
   resolveGithubReadmeStatsTheme,
 } from "./github-stats/theme";
 export {
+  STATS_EXTENDED_ORIGIN,
+  STATS_EXTENDED_PATHS,
   buildGithubStatsMarkdown,
   buildGithubStatsUrl,
+  buildStatsExtendedMarkdown,
+  buildStatsExtendedUrl,
+  parseExtraQuery,
   type GithubStatsParams,
+  type StatsExtendedCard,
+  type StatsExtendedParams,
 } from "./github-stats/url";
 export { integration as githubStatsIntegration } from "./github-stats/index";
 export {

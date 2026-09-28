@@ -49,12 +49,17 @@ test.describe("README generation workflow", () => {
     await expect(page.getByText("Imported The Octocat (@octocat)")).toBeVisible();
 
     await page.getByLabel("Add a section").selectOption("github-stats");
-    await expect(page.getByText("GitHub Readme Stats")).toBeVisible();
+    await expect(page.getByText("GitHub Stats Extended")).toBeVisible();
     await expect(page.getByRole("region", { name: "Generated Markdown" })).toContainText(
-      "github-readme-stats.vercel.app",
+      "github-stats-extended.vercel.app",
     );
     await expect(page.getByRole("region", { name: "Generated Markdown" })).toContainText(
       "username=octocat",
+    );
+
+    await page.getByLabel("Card type").selectOption("top-langs");
+    await expect(page.getByRole("region", { name: "Generated Markdown" })).toContainText(
+      "/api/top-langs",
     );
 
     await page.getByRole("switch", { name: "Enable About Me" }).click();

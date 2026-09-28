@@ -67,7 +67,7 @@ An integration is an adapter around an existing tool. It is not a canvas section
 5. Add unit tests for builders. Mock HTTP. Do not call live APIs in CI.
 6. Stop. Do not render sidebar UI here. A widget consumes the adapter.
 
-Phase 1 adapters: GitHub profiles, Shields.io, GitHub Stats, WakaTime, Blog Post Workflow.
+Phase 1 adapters: GitHub profiles, Shields.io, GitHub Stats Extended, WakaTime, Blog Post Workflow.
 
 ## Pull requests
 

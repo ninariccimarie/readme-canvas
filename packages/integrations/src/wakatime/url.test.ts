@@ -7,6 +7,7 @@ describe("buildWakaTimeUrl", () => {
       buildWakaTimeUrl({ username: "octocat", theme: "merko" }),
     );
 
+    expect(url.origin).toBe("https://github-stats-extended.vercel.app");
     expect(url.pathname).toBe("/api/wakatime");
     expect(url.searchParams.get("username")).toBe("octocat");
     expect(url.searchParams.get("theme")).toBe("merko");

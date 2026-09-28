@@ -1,26 +1,25 @@
 import type { WidgetGenerateContext } from "@readme-canvas/core";
-import {
-  buildGithubStatsMarkdown,
-  resolveGithubReadmeStatsTheme,
-} from "@readme-canvas/integrations";
-import type { GithubStatsConfig } from "./schema";
+import { buildStatsExtendedMarkdown } from "@readme-canvas/integrations";
+import { STATS_CARD_ALTS, statsParamsFromConfig } from "./card";
+import { normalizeGithubStatsConfig, type GithubStatsConfig } from "./schema";
 
 export function generateMarkdown({
   profile,
   theme,
   section,
 }: WidgetGenerateContext<GithubStatsConfig>): string {
-  const username = section.config.username.trim() || profile?.username || "";
+  const config = normalizeGithubStatsConfig(section.config);
+  const params = statsParamsFromConfig(config, profile, theme);
 
-  if (!username) {
+  if (!params) {
     return "";
   }
 
-  const card = buildGithubStatsMarkdown({
-    username,
-    theme: resolveGithubReadmeStatsTheme(theme),
-  });
-  const heading = section.config.heading.trim();
+  const card = buildStatsExtendedMarkdown(
+    params,
+    STATS_CARD_ALTS[params.card ?? "stats"],
+  );
+  const heading = config.heading.trim();
 
   return heading ? `## ${heading}\n\n${card}` : card;
 }

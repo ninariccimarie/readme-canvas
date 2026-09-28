@@ -13,7 +13,7 @@ export const manifest: WidgetManifest<GithubStatsConfig> = {
   id: "github-stats",
   name: "GitHub Stats",
   category: "stats",
-  description: "A GitHub Readme Stats card themed from the active palette.",
+  description: "GitHub Stats Extended cards: stats, top languages, pin, gist, or custom query params.",
   defaultConfig: githubStatsDefaultConfig,
   schema: githubStatsSchema,
   Preview,
