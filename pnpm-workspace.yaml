@@ -2,8 +2,8 @@ packages:
   - "apps/*"
   - "packages/*"
 
+allowBuilds:
+  esbuild: true
+
 catalog:
   typescript: "^5.9.2"
-
-onlyBuiltDependencies:
-  - esbuild
