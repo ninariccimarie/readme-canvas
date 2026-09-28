@@ -1,1 +1,1 @@
-export {}
+export { discoverWidgets, toWidgetRegistry } from "./discover";
