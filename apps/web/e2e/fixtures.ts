@@ -14,7 +14,7 @@ export const octocatPayload = {
 export async function stubRemoteAssets(page: Page) {
   const emptySvg = "<svg xmlns=\"http://www.w3.org/2000/svg\"/>";
 
-  await page.route("https://github-readme-stats.vercel.app/**", (route) =>
+  await page.route("https://github-stats-extended.vercel.app/**", (route) =>
     route.fulfill({
       status: 200,
       contentType: "image/svg+xml",

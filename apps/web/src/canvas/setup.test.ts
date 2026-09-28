@@ -21,7 +21,7 @@ function statsWidget(): WidgetManifest {
     Settings: Empty,
     generateMarkdown: () => "stats",
     setupInstructions: () => [
-      { title: "GitHub Readme Stats", body: "Pin the public instance." },
+      { title: "GitHub Stats Extended", body: "Pin the public instance." },
     ],
   };
 }
@@ -56,13 +56,13 @@ describe("collectSetupSteps", () => {
     let data = addWidget(createInitialData(widgets), "github-stats", widgets);
     const enabled = collectSetupSteps(data, widgets);
 
-    expect(enabled.map((step) => step.title)).toContain("GitHub Readme Stats");
+    expect(enabled.map((step) => step.title)).toContain("GitHub Stats Extended");
 
     const statsId = data.layout.sections[1]?.id ?? "";
     data = toggleSection(data, statsId);
 
     expect(
       collectSetupSteps(data, widgets).map((step) => step.title),
-    ).not.toContain("GitHub Readme Stats");
+    ).not.toContain("GitHub Stats Extended");
   });
 });
