@@ -24,6 +24,7 @@ const typescript: SkillItem = {
   label: "",
   labelColor: "",
   color: "",
+  link: "",
 };
 
 function config(partial: Partial<SkillsConfig>): SkillsConfig {
@@ -113,6 +114,28 @@ describe("skills generateMarkdown", () => {
     expect(url.searchParams.get("label")).toBe("lang");
     expect(url.searchParams.get("labelColor")).toBe("111111");
     expect(url.searchParams.get("color")).toBeNull();
+    expect(url.searchParams.get("link")).toBeNull();
+  });
+
+  it("sets the link query param when provided", () => {
+    const markdown = generateMarkdown(
+      generateContext(
+        config({
+          items: [
+            {
+              ...typescript,
+              url: null,
+              link: "https://www.typescriptlang.org",
+            },
+          ],
+        }),
+        "skills",
+      ),
+    );
+
+    expect(badgeUrl(markdown).searchParams.get("link")).toBe(
+      "https://www.typescriptlang.org",
+    );
   });
 
   it("omits empty skills and empty query params", () => {

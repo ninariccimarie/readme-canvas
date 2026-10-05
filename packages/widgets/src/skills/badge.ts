@@ -21,5 +21,6 @@ export function staticBadgeParamsFromSkill(
     logoSize: item.logoSize.trim() || undefined,
     label: item.label.trim() || undefined,
     labelColor: item.labelColor.trim() || undefined,
+    link: item.link.trim() || undefined,
   };
 }

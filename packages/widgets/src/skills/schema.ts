@@ -14,6 +14,7 @@ export const skillItemSchema = z.object({
   label: z.string(),
   labelColor: z.string(),
   color: z.string(),
+  link: z.string(),
 });
 
 export const skillsSchema = z.object({
@@ -32,6 +33,7 @@ export const skillItemBadgeDefaults = {
   label: "",
   labelColor: "",
   color: "",
+  link: "",
 };
 
 export const skillsDefaultConfig: SkillsConfig = {
@@ -57,6 +59,7 @@ function normalizeItem(item: Partial<SkillItem> & { logo?: string | null }): Ski
     label: item.label ?? "",
     labelColor: item.labelColor ?? "",
     color: item.color ?? "",
+    link: item.link ?? "",
   };
 }
 

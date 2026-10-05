@@ -1,5 +1,5 @@
 import type { WidgetSettingsProps } from "@readme-canvas/core";
-import { Button } from "@readme-canvas/ui";
+import { Button, HexColorInput } from "@readme-canvas/ui";
 import { SKILL_CATALOG } from "./catalog";
 import {
   normalizeSkillsConfig,
@@ -92,13 +92,12 @@ export function Settings({ section, onChange }: WidgetSettingsProps<SkillsConfig
           </label>
           <label>
             logoColor
-            <input
+            <HexColorInput
+              aria-label="logoColor"
               value={item.logoColor}
               placeholder="white"
-              onChange={(event) =>
-                onChange(
-                  patchItem(config, item.id, { logoColor: event.target.value }),
-                )
+              onChange={(value) =>
+                onChange(patchItem(config, item.id, { logoColor: value }))
               }
             />
           </label>
@@ -126,23 +125,33 @@ export function Settings({ section, onChange }: WidgetSettingsProps<SkillsConfig
           </label>
           <label>
             labelColor
-            <input
+            <HexColorInput
+              aria-label="labelColor"
               value={item.labelColor}
               placeholder="abcdef"
-              onChange={(event) =>
-                onChange(
-                  patchItem(config, item.id, { labelColor: event.target.value }),
-                )
+              onChange={(value) =>
+                onChange(patchItem(config, item.id, { labelColor: value }))
               }
             />
           </label>
           <label>
             color
-            <input
+            <HexColorInput
+              aria-label="color"
               value={item.color}
               placeholder="007ACC"
+              onChange={(value) =>
+                onChange(patchItem(config, item.id, { color: value }))
+              }
+            />
+          </label>
+          <label>
+            link
+            <input
+              value={item.link}
+              placeholder="https://example.com"
               onChange={(event) =>
-                onChange(patchItem(config, item.id, { color: event.target.value }))
+                onChange(patchItem(config, item.id, { link: event.target.value }))
               }
             />
           </label>
