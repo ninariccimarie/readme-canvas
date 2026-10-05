@@ -33,7 +33,14 @@ export function Preview({ section, theme }: WidgetRenderProps<SkillsConfig>) {
       {badges.length === 0 ? (
         <p style={{ color: theme.tokens.secondary }}>Add a skill to show badges.</p>
       ) : (
-        <p>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            gap: 8,
+          }}
+        >
           {badges.map((badge) => {
             const image = <img src={badge.src} alt={badge.alt} />;
 
@@ -47,7 +54,7 @@ export function Preview({ section, theme }: WidgetRenderProps<SkillsConfig>) {
               </a>
             );
           })}
-        </p>
+        </div>
       )}
     </section>
   );
