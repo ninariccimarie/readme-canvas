@@ -60,6 +60,7 @@ describe("buildStaticBadgeUrl", () => {
     expect(url.searchParams.get("logoSize")).toBeNull();
     expect(url.searchParams.get("label")).toBeNull();
     expect(url.searchParams.get("labelColor")).toBeNull();
+    expect(url.searchParams.get("link")).toBeNull();
   });
 
   it("encodes spaces, dashes, and underscores in the path", () => {
@@ -113,6 +114,7 @@ describe("buildStaticBadgeUrl", () => {
         logoSize: "auto",
         label: "lang",
         labelColor: "#111111",
+        link: "https://www.typescriptlang.org",
       }),
     );
 
@@ -120,6 +122,7 @@ describe("buildStaticBadgeUrl", () => {
     expect(url.searchParams.get("logoSize")).toBe("auto");
     expect(url.searchParams.get("label")).toBe("lang");
     expect(url.searchParams.get("labelColor")).toBe("111111");
+    expect(url.searchParams.get("link")).toBe("https://www.typescriptlang.org");
   });
 });
 

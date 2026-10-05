@@ -28,6 +28,7 @@ export interface StaticBadgeParams {
   logoSize?: string;
   label?: string;
   labelColor?: string;
+  link?: string;
 }
 
 export function shieldColorFromHex(hex: string): string {
@@ -93,6 +94,7 @@ export function buildStaticBadgeUrl(params: StaticBadgeParams): string {
   setOptionalQuery(url, "logoSize", params.logoSize);
   setOptionalQuery(url, "label", params.label);
   setOptionalQuery(url, "labelColor", params.labelColor, true);
+  setOptionalQuery(url, "link", params.link);
 
   return url.toString();
 }
