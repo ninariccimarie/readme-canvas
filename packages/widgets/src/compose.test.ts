@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { aboutDefaultConfig } from "./about/schema";
 import { toWidgetRegistry } from "./discover";
 import { dividerDefaultConfig } from "./dividers/schema";
-import { skillsDefaultConfig } from "./skills/schema";
+import { skillItemBadgeDefaults, skillsDefaultConfig } from "./skills/schema";
 import { profileFixture, themeFixture } from "./testing/fixtures";
 
 describe("composeMarkdown with local widgets", () => {
@@ -57,8 +57,9 @@ describe("composeMarkdown with local widgets", () => {
                     id: "typescript",
                     name: "TypeScript",
                     url: null,
-                    logo: "typescript",
                     catalogId: "typescript",
+                    ...skillItemBadgeDefaults,
+                    logo: "typescript",
                   },
                 ],
               },

@@ -1,38 +1,61 @@
 import type { WidgetSettingsProps } from "@readme-canvas/core";
 import { Button } from "@readme-canvas/ui";
 import { SKILL_CATALOG } from "./catalog";
-import { skillsSchema, type SkillsConfig } from "./schema";
+import {
+  normalizeSkillsConfig,
+  skillItemBadgeDefaults,
+  skillsSchema,
+  type SkillItem,
+  type SkillsConfig,
+} from "./schema";
+
+function patchItem(
+  config: SkillsConfig,
+  id: string,
+  patch: Partial<SkillItem>,
+): SkillsConfig {
+  return {
+    ...config,
+    items: config.items.map((entry) =>
+      entry.id === id ? { ...entry, ...patch } : entry,
+    ),
+  };
+}
 
 export function Settings({ section, onChange }: WidgetSettingsProps<SkillsConfig>) {
+  const config = normalizeSkillsConfig(section.config);
+
   return (
     <div>
       <label>
         Heading
         <input
-          value={section.config.heading}
+          value={config.heading}
           onChange={(event) =>
-            onChange({ ...section.config, heading: event.target.value })
+            onChange({ ...config, heading: event.target.value })
           }
         />
       </label>
       <label>
-        Display style
+        Style
         <select
-          aria-label="Display style"
-          value={section.config.style}
+          aria-label="Style"
+          value={config.style}
           onChange={(event) => {
             const parsed = skillsSchema.shape.style.safeParse(event.target.value);
             if (parsed.success) {
-              onChange({ ...section.config, style: parsed.data });
+              onChange({ ...config, style: parsed.data });
             }
           }}
         >
-          <option value="icons">Icons</option>
-          <option value="text">Text</option>
-          <option value="badges">Badges</option>
+          <option value="flat">flat</option>
+          <option value="flat-square">flat-square</option>
+          <option value="plastic">plastic</option>
+          <option value="for-the-badge">for-the-badge</option>
+          <option value="social">social</option>
         </select>
       </label>
-      {section.config.items.map((item) => (
+      {config.items.map((item) => (
         <fieldset key={item.id}>
           <legend>{item.name || "Custom"}</legend>
           <label>
@@ -40,14 +63,7 @@ export function Settings({ section, onChange }: WidgetSettingsProps<SkillsConfig
             <input
               value={item.name}
               onChange={(event) =>
-                onChange({
-                  ...section.config,
-                  items: section.config.items.map((entry) =>
-                    entry.id === item.id
-                      ? { ...entry, name: event.target.value }
-                      : entry,
-                  ),
-                })
+                onChange(patchItem(config, item.id, { name: event.target.value }))
               }
             />
           </label>
@@ -56,30 +72,77 @@ export function Settings({ section, onChange }: WidgetSettingsProps<SkillsConfig
             <input
               value={item.url ?? ""}
               onChange={(event) =>
-                onChange({
-                  ...section.config,
-                  items: section.config.items.map((entry) =>
-                    entry.id === item.id
-                      ? { ...entry, url: event.target.value || null }
-                      : entry,
-                  ),
-                })
+                onChange(
+                  patchItem(config, item.id, {
+                    url: event.target.value || null,
+                  }),
+                )
               }
             />
           </label>
           <label>
-            Logo
+            logo
             <input
-              value={item.logo ?? ""}
+              value={item.logo}
+              placeholder="typescript"
               onChange={(event) =>
-                onChange({
-                  ...section.config,
-                  items: section.config.items.map((entry) =>
-                    entry.id === item.id
-                      ? { ...entry, logo: event.target.value || null }
-                      : entry,
-                  ),
-                })
+                onChange(patchItem(config, item.id, { logo: event.target.value }))
+              }
+            />
+          </label>
+          <label>
+            logoColor
+            <input
+              value={item.logoColor}
+              placeholder="white"
+              onChange={(event) =>
+                onChange(
+                  patchItem(config, item.id, { logoColor: event.target.value }),
+                )
+              }
+            />
+          </label>
+          <label>
+            logoSize
+            <input
+              value={item.logoSize}
+              placeholder="auto"
+              onChange={(event) =>
+                onChange(
+                  patchItem(config, item.id, { logoSize: event.target.value }),
+                )
+              }
+            />
+          </label>
+          <label>
+            label
+            <input
+              value={item.label}
+              placeholder={item.name || "label"}
+              onChange={(event) =>
+                onChange(patchItem(config, item.id, { label: event.target.value }))
+              }
+            />
+          </label>
+          <label>
+            labelColor
+            <input
+              value={item.labelColor}
+              placeholder="abcdef"
+              onChange={(event) =>
+                onChange(
+                  patchItem(config, item.id, { labelColor: event.target.value }),
+                )
+              }
+            />
+          </label>
+          <label>
+            color
+            <input
+              value={item.color}
+              placeholder="007ACC"
+              onChange={(event) =>
+                onChange(patchItem(config, item.id, { color: event.target.value }))
               }
             />
           </label>
@@ -88,8 +151,8 @@ export function Settings({ section, onChange }: WidgetSettingsProps<SkillsConfig
             variant="ghost"
             onClick={() =>
               onChange({
-                ...section.config,
-                items: section.config.items.filter((entry) => entry.id !== item.id),
+                ...config,
+                items: config.items.filter((entry) => entry.id !== item.id),
               })
             }
           >
@@ -109,15 +172,16 @@ export function Settings({ section, onChange }: WidgetSettingsProps<SkillsConfig
               return;
             }
             onChange({
-              ...section.config,
+              ...config,
               items: [
-                ...section.config.items,
+                ...config.items,
                 {
                   id: crypto.randomUUID(),
                   name: skill.name,
                   url: null,
-                  logo: skill.logo,
                   catalogId: skill.id,
+                  ...skillItemBadgeDefaults,
+                  logo: skill.logo,
                 },
               ],
             });
@@ -136,15 +200,15 @@ export function Settings({ section, onChange }: WidgetSettingsProps<SkillsConfig
         variant="outline"
         onClick={() =>
           onChange({
-            ...section.config,
+            ...config,
             items: [
-              ...section.config.items,
+              ...config.items,
               {
                 id: crypto.randomUUID(),
                 name: "",
                 url: null,
-                logo: null,
                 catalogId: null,
+                ...skillItemBadgeDefaults,
               },
             ],
           })
