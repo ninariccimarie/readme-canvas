@@ -9,7 +9,7 @@ export const manifest: WidgetManifest<WakaTimeConfig> = {
   id: "wakatime",
   name: "WakaTime",
   category: "stats",
-  description: "A WakaTime coding-time card rendered by GitHub Readme Stats.",
+  description: "A WakaTime coding-time card rendered by GitHub Stats Extended.",
   defaultConfig: wakaTimeDefaultConfig,
   schema: wakaTimeSchema,
   Preview,

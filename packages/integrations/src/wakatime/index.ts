@@ -10,7 +10,7 @@ export const integration: Integration = {
   setupInstructions: () => [
     {
       title: "Connect WakaTime",
-      body: "Create a WakaTime account and use the same username as GitHub, or pass your WakaTime username. Coding-time cards are rendered by github-readme-stats. README Canvas does not run a tracker of its own.",
+      body: "Create a WakaTime account and use the same username as GitHub, or pass your WakaTime username. Coding-time cards are rendered by GitHub Stats Extended. README Canvas does not run a tracker of its own.",
     },
   ],
 };

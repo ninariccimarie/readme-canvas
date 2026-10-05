@@ -25,7 +25,7 @@ The first release is the complete generation workflow.
 - Public GitHub profile import (no login)
 - Widgets: About, Socials, Skills, Blog Posts, Statistics, Banners, Dividers, GIFs, Tables
 - Themes: GitHub, Cursor, Linear, Notion, Wise (light and dark)
-- Integrations: Shields.io, GitHub Stats, WakaTime, Blog Post Workflow
+- Integrations: Shields.io, GitHub Stats Extended, WakaTime, Blog Post Workflow
 - Live preview and Markdown, both always visible
 - One-click copy and generated setup steps
 
