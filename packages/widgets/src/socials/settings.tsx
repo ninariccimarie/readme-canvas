@@ -1,38 +1,61 @@
 import type { WidgetSettingsProps } from "@readme-canvas/core";
-import { Button } from "@readme-canvas/ui";
+import { Button, HexColorInput } from "@readme-canvas/ui";
 import { SOCIAL_PLATFORMS } from "./platforms";
-import { socialsSchema, type SocialsConfig } from "./schema";
+import {
+  normalizeSocialsConfig,
+  socialItemBadgeDefaults,
+  socialsSchema,
+  type SocialItem,
+  type SocialsConfig,
+} from "./schema";
+
+function patchItem(
+  config: SocialsConfig,
+  id: string,
+  patch: Partial<SocialItem>,
+): SocialsConfig {
+  return {
+    ...config,
+    items: config.items.map((entry) =>
+      entry.id === id ? { ...entry, ...patch } : entry,
+    ),
+  };
+}
 
 export function Settings({ section, onChange }: WidgetSettingsProps<SocialsConfig>) {
+  const config = normalizeSocialsConfig(section.config);
+
   return (
     <div>
       <label>
         Heading
         <input
-          value={section.config.heading}
+          value={config.heading}
           onChange={(event) =>
-            onChange({ ...section.config, heading: event.target.value })
+            onChange({ ...config, heading: event.target.value })
           }
         />
       </label>
       <label>
-        Display style
+        Style
         <select
-          aria-label="Display style"
-          value={section.config.style}
+          aria-label="Style"
+          value={config.style}
           onChange={(event) => {
             const parsed = socialsSchema.shape.style.safeParse(event.target.value);
             if (parsed.success) {
-              onChange({ ...section.config, style: parsed.data });
+              onChange({ ...config, style: parsed.data });
             }
           }}
         >
-          <option value="icons">Icons</option>
-          <option value="text">Text</option>
-          <option value="badges">Badges</option>
+          <option value="flat">flat</option>
+          <option value="flat-square">flat-square</option>
+          <option value="plastic">plastic</option>
+          <option value="for-the-badge">for-the-badge</option>
+          <option value="social">social</option>
         </select>
       </label>
-      {section.config.items.map((item) => (
+      {config.items.map((item) => (
         <fieldset key={item.id}>
           <legend>{item.name || "Custom"}</legend>
           <label>
@@ -40,14 +63,7 @@ export function Settings({ section, onChange }: WidgetSettingsProps<SocialsConfi
             <input
               value={item.name}
               onChange={(event) =>
-                onChange({
-                  ...section.config,
-                  items: section.config.items.map((entry) =>
-                    entry.id === item.id
-                      ? { ...entry, name: event.target.value }
-                      : entry,
-                  ),
-                })
+                onChange(patchItem(config, item.id, { name: event.target.value }))
               }
             />
           </label>
@@ -56,30 +72,82 @@ export function Settings({ section, onChange }: WidgetSettingsProps<SocialsConfi
             <input
               value={item.url}
               onChange={(event) =>
-                onChange({
-                  ...section.config,
-                  items: section.config.items.map((entry) =>
-                    entry.id === item.id
-                      ? { ...entry, url: event.target.value }
-                      : entry,
-                  ),
-                })
+                onChange(patchItem(config, item.id, { url: event.target.value }))
               }
             />
           </label>
           <label>
-            Logo
+            logo
             <input
-              value={item.logo ?? ""}
+              value={item.logo}
+              placeholder="github"
               onChange={(event) =>
-                onChange({
-                  ...section.config,
-                  items: section.config.items.map((entry) =>
-                    entry.id === item.id
-                      ? { ...entry, logo: event.target.value || null }
-                      : entry,
-                  ),
-                })
+                onChange(patchItem(config, item.id, { logo: event.target.value }))
+              }
+            />
+          </label>
+          <label>
+            logoColor
+            <HexColorInput
+              aria-label="logoColor"
+              value={item.logoColor}
+              placeholder="white"
+              onChange={(value) =>
+                onChange(patchItem(config, item.id, { logoColor: value }))
+              }
+            />
+          </label>
+          <label>
+            logoSize
+            <input
+              value={item.logoSize}
+              placeholder="auto"
+              onChange={(event) =>
+                onChange(
+                  patchItem(config, item.id, { logoSize: event.target.value }),
+                )
+              }
+            />
+          </label>
+          <label>
+            label
+            <input
+              value={item.label}
+              placeholder={item.name || "label"}
+              onChange={(event) =>
+                onChange(patchItem(config, item.id, { label: event.target.value }))
+              }
+            />
+          </label>
+          <label>
+            labelColor
+            <HexColorInput
+              aria-label="labelColor"
+              value={item.labelColor}
+              placeholder="abcdef"
+              onChange={(value) =>
+                onChange(patchItem(config, item.id, { labelColor: value }))
+              }
+            />
+          </label>
+          <label>
+            color
+            <HexColorInput
+              aria-label="color"
+              value={item.color}
+              placeholder="007ACC"
+              onChange={(value) =>
+                onChange(patchItem(config, item.id, { color: value }))
+              }
+            />
+          </label>
+          <label>
+            link
+            <input
+              value={item.link}
+              placeholder="https://example.com"
+              onChange={(event) =>
+                onChange(patchItem(config, item.id, { link: event.target.value }))
               }
             />
           </label>
@@ -88,8 +156,8 @@ export function Settings({ section, onChange }: WidgetSettingsProps<SocialsConfi
             variant="ghost"
             onClick={() =>
               onChange({
-                ...section.config,
-                items: section.config.items.filter((entry) => entry.id !== item.id),
+                ...config,
+                items: config.items.filter((entry) => entry.id !== item.id),
               })
             }
           >
@@ -111,15 +179,16 @@ export function Settings({ section, onChange }: WidgetSettingsProps<SocialsConfi
               return;
             }
             onChange({
-              ...section.config,
+              ...config,
               items: [
-                ...section.config.items,
+                ...config.items,
                 {
                   id: crypto.randomUUID(),
                   name: platform.name,
                   url: "",
-                  logo: platform.logo,
                   platformId: platform.id,
+                  ...socialItemBadgeDefaults,
+                  logo: platform.logo,
                 },
               ],
             });
@@ -138,15 +207,15 @@ export function Settings({ section, onChange }: WidgetSettingsProps<SocialsConfi
         variant="outline"
         onClick={() =>
           onChange({
-            ...section.config,
+            ...config,
             items: [
-              ...section.config.items,
+              ...config.items,
               {
                 id: crypto.randomUUID(),
                 name: "",
                 url: "",
-                logo: null,
                 platformId: null,
+                ...socialItemBadgeDefaults,
               },
             ],
           })
