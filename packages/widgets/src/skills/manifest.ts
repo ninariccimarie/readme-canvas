@@ -8,7 +8,7 @@ export const manifest: WidgetManifest<SkillsConfig> = {
   id: "skills",
   name: "Skills",
   category: "profile",
-  description: "Languages and tools as icons, text, or Shields badges.",
+  description: "Languages and tools as Shields.io static badges with Simple Icons logos.",
   defaultConfig: skillsDefaultConfig,
   schema: skillsSchema,
   Preview,

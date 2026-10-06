@@ -28,7 +28,7 @@ export function PreviewPane() {
           Enable a section to preview the README.
         </p>
       ) : (
-        <div className="flex flex-col gap-6">
+        <div className="readme-preview flex flex-col gap-6">
           {sections.map((section) => {
             const widget = widgetRegistry.get(section.widgetId);
 

@@ -4,10 +4,17 @@ export { fetchGithubProfile } from "./github/fetch-profile";
 export { mapGithubUser, type GithubUserResponse } from "./github/map-user";
 export { integration as githubIntegration } from "./github/index";
 export {
+  SHIELD_BADGE_STYLES,
   buildShieldMarkdown,
   buildShieldUrl,
+  buildStaticBadgeMarkdown,
+  buildStaticBadgeUrl,
+  encodeShieldPathPart,
   shieldColorFromHex,
+  shieldColorParam,
   type ShieldBadgeParams,
+  type ShieldBadgeStyle,
+  type StaticBadgeParams,
 } from "./shields/url";
 export { integration as shieldsIntegration } from "./shields/index";
 export {

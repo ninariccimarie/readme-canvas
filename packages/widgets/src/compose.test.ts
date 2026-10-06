@@ -3,7 +3,8 @@ import { describe, expect, it } from "vitest";
 import { aboutDefaultConfig } from "./about/schema";
 import { toWidgetRegistry } from "./discover";
 import { dividerDefaultConfig } from "./dividers/schema";
-import { skillsDefaultConfig } from "./skills/schema";
+import { skillItemBadgeDefaults, skillsDefaultConfig } from "./skills/schema";
+import { socialItemBadgeDefaults } from "./socials/schema";
 import { profileFixture, themeFixture } from "./testing/fixtures";
 
 describe("composeMarkdown with local widgets", () => {
@@ -28,14 +29,15 @@ describe("composeMarkdown with local widgets", () => {
               enabled: true,
               config: {
                 heading: "Socials",
-                style: "badges",
+                style: "flat",
                 items: [
                   {
                     id: "github",
                     name: "GitHub",
                     url: profileFixture.profileUrl,
-                    logo: "github",
                     platformId: "github",
+                    ...socialItemBadgeDefaults,
+                    logo: "github",
                   },
                 ],
               },
@@ -57,8 +59,9 @@ describe("composeMarkdown with local widgets", () => {
                     id: "typescript",
                     name: "TypeScript",
                     url: null,
-                    logo: "typescript",
                     catalogId: "typescript",
+                    ...skillItemBadgeDefaults,
+                    logo: "typescript",
                   },
                 ],
               },
@@ -72,7 +75,7 @@ describe("composeMarkdown with local widgets", () => {
 
     expect(markdown).toContain(`# ${profileFixture.name}`);
     expect(markdown).toContain("## Socials");
-    expect(markdown).toContain("img.shields.io/static/v1");
+    expect(markdown).toContain("img.shields.io/badge/");
     expect(markdown).toContain("---");
     expect(markdown).not.toContain("TypeScript");
     expect(markdown.indexOf(profileFixture.name ?? "")).toBeLessThan(

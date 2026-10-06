@@ -48,6 +48,16 @@ test.describe("README generation workflow", () => {
     await page.getByRole("button", { name: "Import profile" }).click();
     await expect(page.getByText("Imported The Octocat (@octocat)")).toBeVisible();
 
+    await page.getByLabel("Add a section").selectOption("skills");
+    await page.getByLabel("Add skill").selectOption("typescript");
+    await expect(page.getByRole("region", { name: "Generated Markdown" })).toContainText(
+      "img.shields.io/badge/",
+    );
+    await expect(page.getByRole("region", { name: "Generated Markdown" })).toContainText(
+      "style=flat",
+    );
+    await expect(page.getByRole("img", { name: "TypeScript" })).toBeVisible();
+
     await page.getByLabel("Add a section").selectOption("github-stats");
     await expect(page.getByText("GitHub Stats Extended")).toBeVisible();
     await expect(page.getByRole("region", { name: "Generated Markdown" })).toContainText(
